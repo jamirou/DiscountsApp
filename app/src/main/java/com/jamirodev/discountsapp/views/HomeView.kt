@@ -53,8 +53,8 @@ fun ContentHomeView(paddingValues: PaddingValues) {
     ) {
         var price by remember { mutableStateOf("") }
         var discount by remember { mutableStateOf("") }
-        var priceDiscount by remember { mutableStateOf("0.0") }
-        var totalDiscount by remember { mutableStateOf("0.0") }
+        var priceDiscount by remember { mutableStateOf(0.0) }
+        var totalDiscount by remember { mutableStateOf(0.0) }
 
         Cards(
             title1 = "Total:",
@@ -68,11 +68,22 @@ fun ContentHomeView(paddingValues: PaddingValues) {
         MainTextField(value = discount, onValueChange = { discount = it }, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
-
+            priceDiscount = priceCalc(price.toDouble(), discount.toDouble())
+            totalDiscount = discountCalc(price.toDouble(), discount.toDouble())
         }
         SpaceH()
         MainButton(text = "Clear", color = Color.Red) {
 
         }
     }
+}
+
+fun priceCalc(price: Double, discount: Double): Double {
+    val res = price - discountCalc(price, discount)
+    return kotlin.math.round(res * 100) / 100.0
+}
+
+fun discountCalc(price: Double, discount: Double): Double {
+    val res = price * (1-discount / 100)
+    return kotlin.math.round(res * 100) / 100.0
 }

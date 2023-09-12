@@ -44,7 +44,7 @@ fun MainCard(title: String, number: Double, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = Color.Gray
+            containerColor = Color.LightGray
         )
     ) {
         Column(
