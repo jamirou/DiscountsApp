@@ -12,10 +12,15 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.jamirodev.discountsapp.components.MainTextField
 import com.jamirodev.discountsapp.components.SpaceH
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +47,10 @@ fun ContentHomeView(paddingValues: PaddingValues) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Is working")
+        var price by remember { mutableStateOf("") }
+        var discount by remember { mutableStateOf("") }
+        MainTextField(value = price, onValueChange = {price = it}, label = "Price:")
+        SpaceH()
+        MainTextField(value = discount, onValueChange = {discount = it}, label = "Discount:")
     }
 }
