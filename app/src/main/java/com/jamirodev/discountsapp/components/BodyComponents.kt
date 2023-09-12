@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,8 +25,8 @@ fun SpaceH(size: Dp = 10.dp) {
 }
 
 @Composable
-fun SpaceW(size: Dp = 5.dp) {
-    Spacer(modifier = Modifier.height(size))
+fun SpaceW(size: Dp =5.dp) {
+    Spacer(modifier = Modifier.width(size))
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.jamirodev.discountsapp.components.Cards
 import com.jamirodev.discountsapp.components.MainButton
 import com.jamirodev.discountsapp.components.MainTextField
 import com.jamirodev.discountsapp.components.SpaceH
@@ -52,6 +53,15 @@ fun ContentHomeView(paddingValues: PaddingValues) {
     ) {
         var price by remember { mutableStateOf("") }
         var discount by remember { mutableStateOf("") }
+        var priceDiscount by remember { mutableStateOf("0.0") }
+        var totalDiscount by remember { mutableStateOf("0.0") }
+
+        Cards(
+            title1 = "Total:",
+            number1 = totalDiscount.toDouble(),
+            title2 = "Discount:",
+            number2 = priceDiscount.toDouble())
+
         SpaceH(20.dp)
         MainTextField(value = price, onValueChange = { price = it }, label = "Price:")
         SpaceH()
