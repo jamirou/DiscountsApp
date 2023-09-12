@@ -20,19 +20,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.jamirodev.discountsapp.components.MainButton
 import com.jamirodev.discountsapp.components.MainTextField
 import com.jamirodev.discountsapp.components.SpaceH
+import com.jamirodev.discountsapp.ui.theme.Primary
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView() {
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
-            title = { Text(text = "Discounts app", color = Color.White) },
+            title = { Text(text = "Discounts app", color = Color.Black) },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = Primary
             )
-            )
+        )
     }) {
         ContentHomeView(it)
     }
@@ -40,17 +42,27 @@ fun HomeView() {
 
 @Composable
 fun ContentHomeView(paddingValues: PaddingValues) {
-    Column(modifier = Modifier
-        .padding(paddingValues)
-        .padding(10.dp)
-        .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+    Column(
+        modifier = Modifier
+            .padding(paddingValues)
+            .padding(10.dp)
+            .fillMaxSize(),
+        //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var price by remember { mutableStateOf("") }
         var discount by remember { mutableStateOf("") }
-        MainTextField(value = price, onValueChange = {price = it}, label = "Price:")
+        SpaceH(20.dp)
+        MainTextField(value = price, onValueChange = { price = it }, label = "Price:")
         SpaceH()
-        MainTextField(value = discount, onValueChange = {discount = it}, label = "Discount:")
+        MainTextField(value = discount, onValueChange = { discount = it }, label = "Discount %")
+        SpaceH(10.dp)
+        MainButton(text = "Generate discount", color = Color.Black) {
+
+        }
+        SpaceH()
+        MainButton(text = "Clear", color = Color.Red) {
+
+        }
     }
 }
