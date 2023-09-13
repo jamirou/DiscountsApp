@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -25,7 +27,7 @@ fun SpaceH(size: Dp = 10.dp) {
 }
 
 @Composable
-fun SpaceW(size: Dp =5.dp) {
+fun SpaceW(size: Dp = 5.dp) {
     Spacer(modifier = Modifier.width(size))
 }
 
@@ -44,15 +46,40 @@ fun MainTextField(value: String, onValueChange: (String) -> Unit, label: String)
 }
 
 @Composable
-fun MainButton(text: String, color: Color = MaterialTheme.colorScheme.primary, onClick: () -> Unit) {
-    OutlinedButton(onClick = onClick, colors = ButtonDefaults.outlinedButtonColors(
-        contentColor = color,
-        containerColor = Color.Transparent
-    ),
-    modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 30.dp)
-        ) {
+fun MainButton(
+    text: String,
+    color: Color = MaterialTheme.colorScheme.primary,
+    onClick: () -> Unit
+) {
+    OutlinedButton(
+        onClick = onClick, colors = ButtonDefaults.outlinedButtonColors(
+            contentColor = color,
+            containerColor = Color.Transparent
+        ),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 30.dp)
+    ) {
         Text(text = text)
     }
+}
+
+@Composable
+fun Alert(
+    title: String,
+    message: String,
+    confirmText: String,
+    onConfirmClick: () -> Unit,
+    onDismissClick: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismissClick,
+        title = { Text(text = title) },
+        text = { Text(text = message) },
+        confirmButton = {
+            Button(onClick = { onConfirmClick() }) {
+                Text(text = confirmText)
+            }
+        }
+    )
 }

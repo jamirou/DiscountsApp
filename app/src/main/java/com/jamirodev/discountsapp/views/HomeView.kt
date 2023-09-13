@@ -1,13 +1,11 @@
 package com.jamirodev.discountsapp.views
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -20,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.jamirodev.discountsapp.components.Alert
 import com.jamirodev.discountsapp.components.Cards
 import com.jamirodev.discountsapp.components.MainButton
 import com.jamirodev.discountsapp.components.MainTextField
@@ -55,12 +54,13 @@ fun ContentHomeView(paddingValues: PaddingValues) {
         var discount by remember { mutableStateOf("") }
         var priceDiscount by remember { mutableStateOf(0.0) }
         var totalDiscount by remember { mutableStateOf(0.0) }
+        var showAlert by remember { mutableStateOf(false) }
 
         Cards(
             title1 = "Total:",
-            number1 = totalDiscount.toDouble(),
+            number1 = totalDiscount,
             title2 = "Discount:",
-            number2 = priceDiscount.toDouble())
+            number2 = priceDiscount)
 
         SpaceH(20.dp)
         MainTextField(value = price, onValueChange = { price = it }, label = "Price:")
@@ -68,8 +68,12 @@ fun ContentHomeView(paddingValues: PaddingValues) {
         MainTextField(value = discount, onValueChange = { discount = it }, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
-            priceDiscount = priceCalc(price.toDouble(), discount.toDouble())
-            totalDiscount = discountCalc(price.toDouble(), discount.toDouble())
+            if (price != "" && discount != ""){
+                priceDiscount = priceCalc(price.toDouble(), discount.toDouble())
+                totalDiscount = discountCalc(price.toDouble(), discount.toDouble())
+            }else {
+                showAlert = true
+            }
         }
         SpaceH()
         MainButton(text = "Clear", color = Color.Red) {
@@ -77,6 +81,13 @@ fun ContentHomeView(paddingValues: PaddingValues) {
             discount = ""
             priceDiscount = 0.0
             totalDiscount = 0.0
+        }
+
+        if (showAlert) {
+            Alert(title = "Alert",
+                message = "Must fill the fields to continue",
+                confirmText = "ok",
+                onConfirmClick = { showAlert = false }) { }
         }
     }
 }
