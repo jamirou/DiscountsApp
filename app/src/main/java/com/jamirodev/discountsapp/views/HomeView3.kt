@@ -69,18 +69,18 @@ fun ContentHomeView3(paddingValues: PaddingValues, viewModel3: OperationViewMode
         MainTextField(value = state.discount, onValueChange = { viewModel3.onValue(it, "discount")}, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
-
+            viewModel3.calculate()
         }
         SpaceH()
         MainButton(text = "Clear", color = Color.Red) {
-
+            viewModel3.clear()
         }
 
         if (state.showAlert) {
             Alert(title = "Alert",
                 message = "Must fill the fields to continue",
                 confirmText = "ok",
-                onConfirmClick = {  }) { }
+                onConfirmClick = { viewModel3.cancelAlert() }) { }
         }
     }
 }
