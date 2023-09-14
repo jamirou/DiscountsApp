@@ -52,39 +52,32 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel2: OperationViewMode
         //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var price by remember { mutableStateOf("") }
-        var discount by remember { mutableStateOf("") }
-        var priceDiscount by remember { mutableStateOf(0.0) }
-        var totalDiscount by remember { mutableStateOf(0.0) }
-        var showAlert by remember { mutableStateOf(false) }
+
 
         Cards(
             title1 = "Total:",
-            number1 = totalDiscount,
+            number1 = viewModel2.totalDiscount,
             title2 = "Discount:",
-            number2 = priceDiscount)
+            number2 = viewModel2.priceDiscount)
 
         SpaceH(20.dp)
-        MainTextField(value = price, onValueChange = { price = it }, label = "Price:")
+        MainTextField(value = viewModel2.price, onValueChange = { viewModel2.onValue(it, "price") }, label = "Price:")
         SpaceH()
-        MainTextField(value = discount, onValueChange = { discount = it }, label = "Discount %")
+        MainTextField(value = viewModel2.discount, onValueChange = { viewModel2.onValue(it, "discount")}, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
 
         }
         SpaceH()
         MainButton(text = "Clear", color = Color.Red) {
-            price = ""
-            discount = ""
-            priceDiscount = 0.0
-            totalDiscount = 0.0
+
         }
 
-        if (showAlert) {
+        if (viewModel2.showAlert) {
             Alert(title = "Alert",
                 message = "Must fill the fields to continue",
                 confirmText = "ok",
-                onConfirmClick = { showAlert = false }) { }
+                onConfirmClick = {   }) { }
         }
     }
 }
