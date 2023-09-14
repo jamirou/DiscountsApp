@@ -66,18 +66,18 @@ fun ContentHomeView2(paddingValues: PaddingValues, viewModel2: OperationViewMode
         MainTextField(value = viewModel2.discount, onValueChange = { viewModel2.onValue(it, "discount")}, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
-
+            viewModel2.calculate()
         }
         SpaceH()
         MainButton(text = "Clear", color = Color.Red) {
-
+            viewModel2.clear()
         }
 
         if (viewModel2.showAlert) {
             Alert(title = "Alert",
                 message = "Must fill the fields to continue",
                 confirmText = "ok",
-                onConfirmClick = {   }) { }
+                onConfirmClick = { viewModel2.cancelAlert() }) { }
         }
     }
 }
