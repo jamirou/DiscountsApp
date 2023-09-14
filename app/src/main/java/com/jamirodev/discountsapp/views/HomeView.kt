@@ -24,10 +24,11 @@ import com.jamirodev.discountsapp.components.MainButton
 import com.jamirodev.discountsapp.components.MainTextField
 import com.jamirodev.discountsapp.components.SpaceH
 import com.jamirodev.discountsapp.ui.theme.Primary
+import com.jamirodev.discountsapp.viewModels.OperationViewModel1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView() {
+fun HomeView(viewModel1: OperationViewModel1) {
     Scaffold(topBar = {
         CenterAlignedTopAppBar(
             title = { Text(text = "Discounts app", color = Color.Black) },
@@ -36,12 +37,12 @@ fun HomeView() {
             )
         )
     }) {
-        ContentHomeView(it)
+        ContentHomeView(it, viewModel1)
     }
 }
 
 @Composable
-fun ContentHomeView(paddingValues: PaddingValues) {
+fun ContentHomeView(paddingValues: PaddingValues, viewModel1: OperationViewModel1) {
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -68,11 +69,11 @@ fun ContentHomeView(paddingValues: PaddingValues) {
         MainTextField(value = discount, onValueChange = { discount = it }, label = "Discount %")
         SpaceH(10.dp)
         MainButton(text = "Generate discount", color = Color.Black) {
-            if (price != "" && discount != ""){
-                priceDiscount = priceCalc(price.toDouble(), discount.toDouble())
-                totalDiscount = discountCalc(price.toDouble(), discount.toDouble())
-            }else {
-                showAlert = true
+            val result = viewModel1.calculate(price, discount)
+            showAlert = result.second.second
+            if (!showAlert){
+                priceDiscount = result.first
+                totalDiscount = result.second.first
             }
         }
         SpaceH()
@@ -90,14 +91,4 @@ fun ContentHomeView(paddingValues: PaddingValues) {
                 onConfirmClick = { showAlert = false }) { }
         }
     }
-}
-
-fun priceCalc(price: Double, discount: Double): Double {
-    val res = price - discountCalc(price, discount)
-    return kotlin.math.round(res * 100) / 100.0
-}
-
-fun discountCalc(price: Double, discount: Double): Double {
-    val res = price * (1-discount / 100)
-    return kotlin.math.round(res * 100) / 100.0
 }
